@@ -47,7 +47,6 @@ class Post(models.Model):
     short_desc = models.TextField(default=None)
     text = models.TextField(default=None)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата публикации")
-    comments = models.ForeignKey('Comment', on_delete=models.CASCADE, default=None, blank=True)
     tags = models.ManyToManyField('Tag', related_name="posts", blank=True)
 
     # def get_absolute_url(self):
@@ -62,6 +61,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, default=None)
     author = models.CharField(max_length=100)
     text = models.TextField(default=None)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата публикации")
