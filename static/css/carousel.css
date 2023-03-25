@@ -1,0 +1,158 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+  padding-top: 3rem;
+  color: #5a5a5a;
+}
+
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  bottom: 3rem;
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel-item {
+  height: 32rem;
+}
+
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+/* rtl:begin:ignore */
+.marketing .col-lg-4 p {
+  margin-right: .75rem;
+  margin-left: .75rem;
+}
+
+.marg {
+    margin-top: 4rem;
+}
+/* rtl:end:ignore */
+
+.app-top {
+    background: white;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+/* Featurettes
+------------------------- */
+img {
+    max-width: 65%;
+    height:auto;
+}
+
+.featurette-divider {
+  margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+}
+
+.block-divider {
+  margin-top: 3rem; /* Space out the Bootstrap <hr> more */
+}
+
+.custom-divider {
+  height: 0!important;
+}
+
+.blog-index-head {
+    padding-top: 0!important;
+    padding-bottom: 3rem!important;
+}
+
+/* Thin out the marketing headings */
+/* rtl:begin:remove */
+.featurette-heading {
+  letter-spacing: -.05rem;
+}
+
+.blog-posts {
+    margin-top: 0!important;
+}
+
+.post-head {
+    font-family: Fira Sans,sans-serif;
+    color: #333;
+}
+
+.short-desc {
+    font-size: 1.1rem;
+    line-height: 1.56;
+    color: #111;
+}
+
+.post-tags {
+    color: #5e6973;
+}
+
+.post-footer {
+    display: flex;
+    align-items: center;
+}
+
+.post-datatime {
+    margin-inline-start: auto;
+}
+
+.body-bg {
+    background: #f5f5f5;
+    padding-top: 1.5rem;
+}
+
+.blog-post {
+    background: white;
+    padding: 1rem;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.post-card-img {
+    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+}
+
+.more-apps-block {
+    min-width: 172px;
+}
+
+.read-more-block {
+    margin-bottom: 5rem;
+    min-width: 110px;
+}
+
+/* rtl:end:remove */
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 40em) {
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
+
+@media (min-width: 62em) {
+  .featurette-heading {
+    margin-top: 7rem;
+  }
+}
