@@ -7,6 +7,7 @@ urlpatterns = [
     path('apps/', apps, name='apps'),
     path('blog/', blog, name='blog'),
     path('post/<int:pk>/', post, name='post'),
+    path('app/<slug:slug>/', app, name='app'),
     path('sidebar/', sidebar, name='sidebar'),
 
 

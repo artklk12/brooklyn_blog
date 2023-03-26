@@ -6,7 +6,8 @@ def start(request):
     return render(request, 'index.html', {'posts': posts})
 
 def apps(request):
-    return render(request, 'apps.html')
+    apps = App.objects.order_by('views_count')
+    return render(request, 'applications.html', {'apps': apps})
 
 def blog(request):
     posts = Post.objects.order_by("-pk")
@@ -15,6 +16,10 @@ def blog(request):
 def post(request, pk):
     post = Post.objects.get(pk=pk)
     return render(request, 'post.html', {'post': post})
+
+def app(request, slug):
+    app = App.objects.get(slug=slug)
+    return render(request, 'app.html', {'app': app})
 
 def sidebar(request):
     return render(request, 'sidebar.html')

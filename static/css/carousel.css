@@ -2,10 +2,17 @@
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
 
+html {
+    height: 100%;
+}
+
 body {
   padding-top: 3rem;
   color: #5a5a5a;
+  height: 100%;
+  background: #f0f0f0;
 }
+
 
 .cat-header {
     padding-top: 2rem!important;
@@ -38,6 +45,11 @@ body {
   margin-bottom: 1.5rem;
   text-align: center;
 }
+
+.custom-mrg {
+    margin-bottom: 1.5rem;
+}
+
 /* rtl:begin:ignore */
 .marketing .col-lg-4 p {
   margin-right: .75rem;
@@ -133,8 +145,8 @@ img {
 }
 
 .body-bg {
-    background: #f0f0f0;
     padding-top: 1.5rem;
+    height: 100%;
 }
 
 .blog-post {
@@ -224,6 +236,65 @@ li.custom-sub:before {
 ul.changelog {
     padding-left: 1rem;
 }
+
+/* App page
+-------------------------------------------------- */
+@media (min-width: 1000px) {
+.app-carousel {
+    margin-left: 7%;
+    margin-right: 7%;
+    margin-bottom: 1.5rem;
+    height:auto;
+}
+}
+
+.custom-carousel-control-next-icon{
+    background-image: url('next.svg');
+}
+
+.custom-carousel-control-previous-icon{
+    background-image: url('previous.svg');
+}
+
+
+@media (min-width: 1000px) {
+.custom-carousel-item {
+    height:25rem;
+}
+}
+
+@media (min-width: 1000px) {
+.custom-carousel-item img {
+    max-width: 100%;
+    height: 25rem!important;
+}
+}
+
+@media (max-width: 1000px) {
+.custom-carousel-item {
+    height: 12rem;
+}
+}
+
+.app-header-divider {
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+.app-head {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.app-head img {
+    margin-left: 0!important;
+    margin-right: 1rem!important;
+}
+.app-head h2 {
+    padding-top: 4px;
+}
+
+
 
 /* Comments
 ------------------------- */

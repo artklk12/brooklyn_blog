@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 # Create your models here.
 class App(models.Model):
     title = models.CharField(max_length=100)
+    slug = models.CharField(max_length=100)
     logo_url = models.CharField(max_length=200, blank=True)
     img1_url = models.CharField(max_length=200, blank=True)
     img2_url = models.CharField(max_length=200, blank=True)
@@ -13,7 +14,6 @@ class App(models.Model):
     link1 = models.CharField(max_length=200, blank=True)
     link2 = models.CharField(max_length=200, blank=True)
     link3 = models.CharField(max_length=200, blank=True)
-    changelog = models.ForeignKey('Changelog', on_delete=models.CASCADE, default=None)
     views_count = models.CharField(max_length=50, default=7)
     app_url = models.CharField(max_length=200, blank=True)
 
@@ -29,6 +29,7 @@ class App(models.Model):
 
 
 class Changelog(models.Model):
+    app = models.ForeignKey('App', on_delete=models.CASCADE, default=None)
     title = models.CharField(max_length=100)
     changes = models.CharField(max_length=300)
 
