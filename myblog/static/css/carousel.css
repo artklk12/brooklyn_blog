@@ -299,6 +299,10 @@ ul.changelog {
 /* Comments
 ------------------------- */
 
+.comments-count {
+    padding-left: 1rem;
+}
+
 .comment-header {
     display: flex;
     padding-bottom: 5px;
