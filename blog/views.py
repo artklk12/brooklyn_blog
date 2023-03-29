@@ -2,12 +2,16 @@ from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
 from django.contrib.auth import login, logout
-
-
+from .services import *
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView, DetailView
 
 def start(request):
+    # apps_is_active()
+    apps = App.objects.order_by("pk")[0:3]
     posts = Post.objects.order_by("-pk")[0:2]
-    return render(request, 'index.html', {'posts': posts})
+    return render(request, 'index.html', {'posts': posts, 'apps': apps})
 
 def apps(request):
     apps = App.objects.order_by('views_count')
@@ -17,6 +21,14 @@ def blog(request):
     posts = Post.objects.order_by("-pk")
     return render(request, 'blog.html', {'posts': posts})
 
+class BlogView(ListView):
+    paginate_by = 2
+    model = Post
+    template_name = "blog.html"
+    context_object_name = 'posts'
+
+
+
 def post(request, pk):
     post = Post.objects.get(pk=pk)
     return render(request, 'post.html', {'post': post})
@@ -24,9 +36,6 @@ def post(request, pk):
 def app(request, slug):
     app = App.objects.get(slug=slug)
     return render(request, 'app.html', {'app': app})
-
-def sidebar(request):
-    return render(request, 'sidebar.html')
 
 
 def user_login(request):
@@ -40,6 +49,9 @@ def user_login(request):
         form = UserLoginForm()
     return render(request, 'login.html', {"form": form})
 
+def user_logout(request):
+    logout(request)
+    return redirect('start')
 
 def register(request):
     if request.method == 'POST':

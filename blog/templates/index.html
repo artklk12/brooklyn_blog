@@ -1,105 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.108.0">
-    <title>Carousel Template · Bootstrap v5.3</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-
-      .b-example-divider {
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
-
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
-
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
-
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
-
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-    </style>
-
-    <!-- Custom styles for this template -->
-   <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-   <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
-  </head>
-  <body>
-
-<header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'start' %}">Br[oo]klyn+=blog</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'apps' %}">Приложения</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'blog' %}">Блог</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="https://github.com/artklk12">GitHub</a>
-          </li>
-
-        </ul>
-        <div class="text-end">
-          <a class="btn btn-outline-light me-2" href="{% url 'login' %}">Login</a>
-          <a class="btn btn-warning" href="{% url 'register' %}">Sign-up</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-</header>
-
-<main>
+{% block content %}
   <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -158,7 +59,7 @@
 <div class="body-bg">
 <div class="custom-mrg container marketing">
   <section class="text-center container">
-    <div class="row py-lg-5">
+    <div class="row py-lg-3">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Приложения</h1>
                 <p class="lead text-muted">Познакомьтесь с моими приложениями, возможно некоторые вы захотите использовать у
@@ -167,30 +68,34 @@
     </div>
   </section>
     <!-- Three columns of text below the carousel -->
-    <div class="row">
+    <div class="row app-row">
+      <div class="app-divider"></div>
+      {% for app in apps %}
       <div class="col-lg-4 app-top">
-        <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="{% static 'css/wunder-logo.png' %}"
+        <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="{{ app.logo_url }}"
            role="img" aria-label="Placeholder: 140x140">
-        <h2 class="fw-normal">Wunderlist</h2>
-        <p>Легендарное приложение снова с нами, записываем задачи выполняем их, весело и прикольно.</p>
-        <p><a class="btn btn-secondary" href="#">Смотреть &raquo;</a></p>
+        <h2 class="fw-normal">{{ app.title }}</h2>
+
+        <p> {{ app.short_desc }} </p>
+        <p><a class="btn btn-secondary" href="{% url 'app' app.pk %}">Смотреть &raquo;</a></p>
+        <div class="app-status">
+          {% if app.is_active %}
+
+            <p class="app-status-desc">Работает</p>
+            <div class="me-auto spinner-border text-success" role="status">
+          {% else %}
+            <p class="app-status-desc">Не работает</p>
+            <div class="me-auto spinner-grow text-danger" role="status">
+          {% endif %}
+        </div>
+        <p class="app-status-desc">{{ app.views_count }} просмотров</p>
+        </div>
       </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4 app-top">
-        <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="{% static 'css/flags.png' %}"
-           role="img" aria-label="Placeholder: 140x140">
-        <h2 class="fw-normal">Угадай флаг</h2>
-        <p>Игровой бот в телеграме, в котором вы можете отгадывать флаги более 100 стран, а также вызвать на
-          поединок своих друзей</p>
-        <p><a class="btn btn-secondary" href="#">Смотреть &raquo;</a></p>
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4 app-top">
-         <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="{% static 'css/tg.png' %}"
-           role="img" aria-label="Placeholder: 140x140">
-        <h2 class="fw-normal">Автопостер для телеграма</h2>
-        <p>Если вы ищите способ для отложенной публикации постов в телеграме, то это то что вы ищите</p>
-        <p><a class="btn btn-secondary" href="#">Смотреть &raquo;</a></p>
-      </div><!-- /.col-lg-4 -->
-      <div class="more-apps-block d-grid gap-2 col-2 mx-auto">
+
+        <div class="app-divider"></div>
+    {% endfor %}
+
+      <div class="more-apps-block gap-2 col-2 mx-auto">
         <a href="{% url 'apps' %}" class="btn btn-primary">Все приложения</a>
       </div>
 
@@ -254,35 +159,6 @@
       </div>
   </div><!-- /.container -->
 </div>
-
-  <!-- FOOTER -->
-<div class="container">
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
-    <div class="col-md-4 d-flex align-items-center">
-      <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-      </a>
-      <span class="mb-3 mb-md-0 text-muted">© 2022 Company, Inc</span>
-    </div>
-
-    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
-      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
-      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
-    </ul>
-  </footer>
 </div>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-        crossorigin="anonymous"></script>
-<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"
-        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-        crossorigin="anonymous"></script>
-      
-  </body>
-</html>
+</div>
+{% endblock %}

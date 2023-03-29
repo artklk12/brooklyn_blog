@@ -5,17 +5,21 @@ from django.urls import reverse_lazy
 # Create your models here.
 class App(models.Model):
     title = models.CharField(max_length=100)
-    slug = models.CharField(max_length=100)
     logo_url = models.CharField(max_length=200, blank=True)
+    slug = models.CharField(max_length=100)
+    short_desc = models.TextField(default='Нет описания', blank=True)
+    text = models.TextField(default=None)
     img1_url = models.CharField(max_length=200, blank=True)
     img2_url = models.CharField(max_length=200, blank=True)
     img3_url = models.CharField(max_length=200, blank=True)
-    text = models.TextField(default=None)
     link1 = models.CharField(max_length=200, blank=True)
     link2 = models.CharField(max_length=200, blank=True)
     link3 = models.CharField(max_length=200, blank=True)
     views_count = models.CharField(max_length=50, default=7)
+    check_status_url = models.CharField(max_length=200, blank=True)
+    is_active = models.BooleanField(default=False)
     app_url = models.CharField(max_length=200, blank=True)
+
 
     # def get_absolute_url(self):
     #     return reverse_lazy('view_tasks', kwargs={"category_id": self.category.id, "pk": self.pk})
@@ -47,6 +51,7 @@ class Post(models.Model):
     img_url = models.CharField(max_length=200, blank=True)
     short_desc = models.TextField(default=None)
     text = models.TextField(default=None)
+    views_count = models.CharField(max_length=50, default=7)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата публикации")
     tags = models.ManyToManyField('Tag', related_name="posts", blank=True)
 

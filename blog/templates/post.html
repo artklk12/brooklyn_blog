@@ -1,107 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.108.0">
-    <title>Carousel Template · Bootstrap v5.3</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-
-      .b-example-divider {
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
-
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
-
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
-
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
-
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-    </style>
-
-    <!-- Custom styles for this template -->
-   <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-   <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
-  </head>
-  <body>
-
-<header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'start' %}">Br[oo]klyn+=blog</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'apps' %}">Приложения</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'blog' %}">Блог</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="https://github.com/artklk12">GitHub</a>
-          </li>
-
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
-
-</header>
-
-<main>
-
+{% block content %}
   <!-- Marketing messaging and featurettes
   ================================================== -->
   <!-- Wrap the rest of the page in another container to center all the content. -->
@@ -149,31 +48,27 @@
               <div class="comment-content">
                 <div class="comment-header">
                   <div class="comment-username">Гость</div>
-                  <div class="comment-datetime">вчера в 20:13</div>
-                </div>
-              <p class="comment-text">Вау, крутая статья</p>
-
-                </div>
-            </div>
-        <div class="comment">
-              <div class="comment-dot"><button type="button" class="comment-btn btn btn-outline-secondary"></button></div>
-              <div class="comment-content">
-                <div class="comment-header">
-                  <div class="comment-username">Гость</div>
                   <div class="comment-datetime">вчера в 20:17</div>
                 </div>
-              <p class="comment-text">Фигня, автор не понимает о чём пишет</p>
+              <p class="comment-text">Есть забавное предположение, что автора могли заставить написать книгу, он не
+                хотел это делать, но не мог отказаться (потеряет работу, гранты, какие-то перспективы). А так написал
+                книгу, она умеренно плохая, за это уже не карают, но заставлять ещё раз не будут. В некоторых наших универах и компаниях такое встречается, сделать плохо гораздо лучше для отношения с окружающими, чем не сделать вовсе.
+<p class="comment-text">
+А так книга - шедевр, спасибо за разбор, было интересно почитать. Я бы предложил сформулировать основные тезисы с самыми любыми косяками и отправить письма в универ, на работу автору книги, если не ответят - тегнуть в социальных сетях его коллег/представителей клмпвнии. Интересно, что они скажут.</p>
 
                 </div>
             </div>
-        <div class="comment">
+        <div class="comment comment-author">
               <div class="comment-dot"><button type="button" class="comment-btn btn btn-outline-secondary"></button></div>
               <div class="comment-content">
                 <div class="comment-header">
-                  <div class="comment-username">Brooklyn</div>
+                  <div class="comment-username comment-author-text">Brooklyn</div>
                   <div class="comment-datetime">вчера в 21:18</div>
+
                 </div>
-              <p class="comment-text">Поясни пожалуйста, что именно я не понимаю</p>
+              <p class="comment-text">
+                  Есть вариант, что книгу вообще никто не писал. https://habr.com/ru/post/698852/
+              </p>
 
                 </div>
             </div>
@@ -184,7 +79,24 @@
                   <div class="comment-username">Гость</div>
                   <div class="comment-datetime">Сегодня в 12:03</div>
                 </div>
-              <p class="comment-text">Забей, это хейтер, ты красава</p>
+              <p class="comment-text">Вы не правы, когда противопоставляете криптографию и стенографию.
+
+Криптография, как наука, включает в себя стенографию, как метод. Любая наука на практике реализуется через методы, которые эта наука анализирует и определяет.
+
+Так, что стенография, это часть криптографии.</p>
+
+                </div>
+            </div>
+        <div class="comment comment-author">
+              <div class="comment-dot"><button type="button" class="comment-btn btn btn-outline-secondary"></button></div>
+              <div class="comment-content">
+                <div class="comment-header">
+                  <div class="comment-username">Гость</div>
+                  <div class="comment-datetime">Сегодня в 20:19</div>
+                </div>
+              <p class="comment-text">*Стеганографию
+
+Криптография и стеганография - это разные науки, хоть и обе защищают информацию. Одна (криптография) защищает информацию посредством шифрования, когда существует факт сообщения, но смысл неясен. Другая (стеганография) защищает информацию посредством самого факта её сокрытия. Обе науки развивались иногда параллельно, иногда в синтезе. Но их даже теоретически нельзя связать, кроме того, что они защищают информацию. Плюс к этому криптография, вырадившись из своей классической оболочки, стала также способной не только предоставлять конфиденциальность информации, но также её целостность и аутентификацию. Стеганография в этом плане отстаёт, как в способах применения, так и на практике.</p>
 
                 </div>
             </div>
@@ -192,13 +104,17 @@
               <div class="comment-dot"><button type="button" class="comment-btn btn btn-outline-secondary"></button></div>
               <div class="comment-content">
                 <div class="comment-header">
-                  <div class="comment-username">Brooklyn</div>
-                  <div class="comment-datetime">Сегодня в 20:19</div>
+                  <div class="comment-username">Гость</div>
+                  <div class="comment-datetime">вчера в 20:13</div>
                 </div>
-              <p class="comment-text">Спасибо!</p>
+              <p class="comment-text">Я ни разу не специалист по криптографии и купил эту книгу как раз для того, чтобы попробовать немного разобраться. Однако, даже мой совсем уж никакой уровень знаний в этой области оказался достаточным для того, чтобы закралось подозрение, что я читаю какую-то лажу.
+Вижу, что так и есть. Не денег жалко. Жалко, что обманулся. Обычно "ДМК" выпускает книги весьма качественные и ответственно выбранные для перевода.
 
-                </div>
-            </div>
+P.S. Выпущенная этим же издательством манга по криптографии, не смотря на ее легкий жанр с картинками, и та, кажется, куда лучше</p>
+
+        </div>
+        </div>
+
       </div>
 
       </div>
@@ -214,39 +130,5 @@
 
 
   </div><!-- /.container -->
-      <!-- FOOTER -->
-<div class="container">
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
-    <div class="col-md-4 d-flex align-items-center">
-      <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-      </a>
-      <span class="mb-3 mb-md-0 text-muted">© 2022 Company, Inc</span>
-    </div>
-
-    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
-      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
-      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
-    </ul>
-  </footer>
 </div>
-
-
-</div>
-
-
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-        crossorigin="anonymous"></script>
-<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"
-        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-        crossorigin="anonymous"></script>
-      
-  </body>
-</html>
+{% endblock %}
