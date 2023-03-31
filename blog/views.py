@@ -9,17 +9,14 @@ from django.views.generic import ListView, DetailView
 
 def start(request):
     # apps_is_active()
-    apps = App.objects.order_by("pk")[0:3]
+    apps = App.objects.order_by('-views_count')[0:3]
     posts = Post.objects.order_by("-pk")[0:2]
     return render(request, 'index.html', {'posts': posts, 'apps': apps})
 
 def apps(request):
-    apps = App.objects.order_by('views_count')
+    apps = App.objects.order_by('-views_count')
     return render(request, 'applications.html', {'apps': apps})
 
-def blog(request):
-    posts = Post.objects.order_by("-pk")
-    return render(request, 'blog.html', {'posts': posts})
 
 class BlogView(ListView):
     paginate_by = 2
@@ -27,6 +24,13 @@ class BlogView(ListView):
     template_name = "blog.html"
     context_object_name = 'posts'
 
+    def get_queryset(self):
+        tag = self.request.GET.getlist('tag')
+        if tag:
+            queryset = Post.objects.filter(tags__slug__in=tag).order_by("-pk")
+        else:
+            queryset = Post.objects.order_by("-pk")
+        return queryset
 
 
 def post(request, pk):
@@ -48,6 +52,7 @@ def user_login(request):
     else:
         form = UserLoginForm()
     return render(request, 'login.html', {"form": form})
+
 
 def user_logout(request):
     logout(request)

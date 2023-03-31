@@ -69,9 +69,10 @@ body {
 }
 
 .app-top {
+    height: max-content;
     background: white;
     padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
 }
 }
 
@@ -198,6 +199,11 @@ img {
 .post-tags {
     font-size: 0.8rem;
     color: #5e6973;
+}
+
+a.tag-link:link, a.tag-link:hover, a.tag-link:visited, a.tag-link:focus, a.tag-link:active{
+    color: #5e6973;
+    text-decoration: none;
 }
 
 .post-footer {

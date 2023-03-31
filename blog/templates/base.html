@@ -78,18 +78,20 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
+        {% with url_name=request.resolver_match.url_name %}
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'apps' %}">Приложения</a>
+            <a class="nav-link {% if url_name == 'apps' %}active{% endif %}" aria-current="page"
+               href="{% url 'apps' %}">Приложения</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'blog' %}">Блог</a>
+            <a class="nav-link  {% if url_name == 'blog' %}active{% endif %}" aria-current="page" href="{% url 'blog' %}">Блог</a>
           </li>
           <li class="nav-item">
             <a class="nav-link " href="https://github.com/artklk12">GitHub</a>
           </li>
-
         </ul>
+        {% endwith %}
          {% if request.user.is_authenticated %}
         <div class="dropdown text-end profile-dropdown">
           <a role="button" href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"

@@ -15,7 +15,7 @@ class App(models.Model):
     link1 = models.CharField(max_length=200, blank=True)
     link2 = models.CharField(max_length=200, blank=True)
     link3 = models.CharField(max_length=200, blank=True)
-    views_count = models.CharField(max_length=50, default=7)
+    views_count = models.IntegerField()
     check_status_url = models.CharField(max_length=200, blank=True)
     is_active = models.BooleanField(default=False)
     app_url = models.CharField(max_length=200, blank=True)
@@ -40,6 +40,7 @@ class Changelog(models.Model):
 
 class Tag(models.Model):
     title = models.CharField(max_length=50, unique=True)
+    slug = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return self.title
@@ -51,7 +52,7 @@ class Post(models.Model):
     img_url = models.CharField(max_length=200, blank=True)
     short_desc = models.TextField(default=None)
     text = models.TextField(default=None)
-    views_count = models.CharField(max_length=50, default=7)
+    views_count = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата публикации")
     tags = models.ManyToManyField('Tag', related_name="posts", blank=True)
 
