@@ -1,7 +1,7 @@
 from django.contrib import admin
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
-from .models import *
+from .models import Post, App, Comment, Tag
 # Register your models here.
 
 
@@ -13,9 +13,9 @@ class PostAdminForm(forms.ModelForm):
         model = Post
         fields = '__all__'
 
+
 class AppAdminForm(forms.ModelForm):
     text = forms.CharField(widget=CKEditorUploadingWidget())
-
 
     class Meta:
         model = App
@@ -55,4 +55,3 @@ admin.site.register(Post, PostsAdmin)
 admin.site.register(App, AppsAdmin)
 admin.site.register(Comment, CommentsAdmin)
 admin.site.register(Tag, TagsAdmin)
-

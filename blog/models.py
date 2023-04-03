@@ -1,8 +1,8 @@
 from django.db import models
-from django.urls import reverse_lazy
-
-
+# from django.urls import reverse_lazy
 # Create your models here.
+
+
 class App(models.Model):
     title = models.CharField(max_length=100)
     logo_url = models.CharField(max_length=200, blank=True)
@@ -15,14 +15,18 @@ class App(models.Model):
     link1 = models.CharField(max_length=200, blank=True)
     link2 = models.CharField(max_length=200, blank=True)
     link3 = models.CharField(max_length=200, blank=True)
-    views_count = models.IntegerField()
+    views_count = models.IntegerField(default=0)
     check_status_url = models.CharField(max_length=200, blank=True)
     is_active = models.BooleanField(default=False)
     app_url = models.CharField(max_length=200, blank=True)
 
-
     # def get_absolute_url(self):
     #     return reverse_lazy('view_tasks', kwargs={"category_id": self.category.id, "pk": self.pk})
+
+    def add_view(self):
+        self.views_count += 1  # Django somehow calls the view function twice idk
+        self.save()
+        return
 
     def __str__(self):
         return self.title
@@ -52,7 +56,7 @@ class Post(models.Model):
     img_url = models.CharField(max_length=200, blank=True)
     short_desc = models.TextField(default=None)
     text = models.TextField(default=None)
-    views_count = models.IntegerField()
+    views_count = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата публикации")
     tags = models.ManyToManyField('Tag', related_name="posts", blank=True)
 
@@ -62,9 +66,15 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def add_view(self):
+        self.views_count += 1  # Django somehow calls the view function twice idk
+        self.save()
+        return
+
     class Meta:
         verbose_name = 'Post'
         verbose_name_plural = 'Posts'
+        ordering = ['-pk']
 
 
 class Comment(models.Model):
@@ -72,5 +82,3 @@ class Comment(models.Model):
     author = models.CharField(max_length=100)
     text = models.TextField(default=None)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата публикации")
-
-
