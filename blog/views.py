@@ -1,43 +1,51 @@
 from django.shortcuts import render, redirect
-from .models import *
-from .forms import *
+from .forms import UserLoginForm, UserRegisterForm
+from .models import Post, App
 from django.contrib.auth import login, logout
-from .services import *
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DetailView
+# from .services import apps_is_active
+from .services import get_index_data, base_view, PostsListMixin, AppsListMixin, BaseView, PostDetailMixin, AppDetailMixin
+# from django.contrib.auth.decorators import login_required
+# from django.utils.decorators import method_decorator
+from django.views.generic import ListView
+import logging
+from hitcount.views import HitCountDetailView
+from django.views.decorators.cache import cache_page
 
+
+logger = logging.getLogger(__name__)
+
+
+@base_view
 def start(request):
     # apps_is_active()
-    apps = App.objects.order_by("pk")[0:3]
-    posts = Post.objects.order_by("-pk")[0:2]
+    apps, posts = get_index_data()
     return render(request, 'index.html', {'posts': posts, 'apps': apps})
 
-def apps(request):
-    apps = App.objects.order_by('views_count')
-    return render(request, 'applications.html', {'apps': apps})
 
-def blog(request):
-    posts = Post.objects.order_by("-pk")
-    return render(request, 'blog.html', {'posts': posts})
-
-class BlogView(ListView):
+class BlogListView(BaseView, PostsListMixin, ListView):
     paginate_by = 2
     model = Post
     template_name = "blog.html"
-    context_object_name = 'posts'
 
 
-
-def post(request, pk):
-    post = Post.objects.get(pk=pk)
-    return render(request, 'post.html', {'post': post})
-
-def app(request, slug):
-    app = App.objects.get(slug=slug)
-    return render(request, 'app.html', {'app': app})
+class ApplicationsListView(BaseView, AppsListMixin, ListView):
+    model = App
+    template_name = "applications.html"
 
 
+class PostDetailView(BaseView, PostDetailMixin, HitCountDetailView):
+    model = Post
+    template_name = "post.html"
+    count_hit = True
+
+
+class AppDetailView(BaseView, AppDetailMixin, HitCountDetailView):
+    model = App
+    template_name = "app.html"
+    count_hit = True
+
+
+@base_view
 def user_login(request):
     if request.method == "POST":
         form = UserLoginForm(data=request.POST)
@@ -49,10 +57,14 @@ def user_login(request):
         form = UserLoginForm()
     return render(request, 'login.html', {"form": form})
 
+
+@base_view
 def user_logout(request):
     logout(request)
     return redirect('start')
 
+
+@base_view
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(data=request.POST)
