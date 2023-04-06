@@ -12,6 +12,20 @@ from django.http import Http404, HttpResponseServerError
 logger = logging.getLogger(__name__)
 
 
+# def apps_is_active():
+#     apps = App.objects.all()
+#     for app in apps:
+#         r = requests.get(url=app.check_status_url)
+#         if r.ok:
+#             app.is_active = True
+#             app.save()
+#         else:
+#             app.is_active = False
+#             app.save()
+#     return
+#
+
+
 class BaseView(View):
     """ Базовый класс для всех view, добавляет логирование и обработку исключений"""
 
@@ -33,9 +47,12 @@ def base_view(func):
         try:
             with transaction.atomic():
                 return func(request, *args, **kwargs)
+        except Http404 as ex:
+            logger.exception(ex)
+            raise Http404
         except Exception as ex:
-            return logger.exception(ex)
-
+            logger.exception(ex)
+            return HttpResponseServerError('Internal Server Error')
     return inner
 
 
@@ -78,31 +95,7 @@ class PostDetailMixin(generic.base.ContextMixin):
         return obj
 
 
-# def apps_is_active():
-#     apps = App.objects.all()
-#     for app in apps:
-#         r = requests.get(url=app.check_status_url)
-#         if r.ok:
-#             app.is_active = True
-#             app.save()
-#         else:
-#             app.is_active = False
-#             app.save()
-#     return
-#
-
-
 def get_index_data():
     apps = App.objects.prefetch_related('views')[0:3]
     posts = Post.objects.prefetch_related('views', 'tags')[0:2]
     return apps, posts
-
-
-def get_post(pk):
-    post = get_object_or_404(Post, pk=pk)
-    return post
-
-
-def get_app(slug):
-    app = get_object_or_404(App, slug=slug)
-    return app

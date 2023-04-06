@@ -1,7 +1,7 @@
-from django.urls import path, include
-from django.conf import settings
+from django.urls import path
 from .views import start, user_login, user_logout, register, BlogListView, ApplicationsListView, PostDetailView, \
     AppDetailView
+
 
 urlpatterns = [
     path('', start, name='start'),
@@ -13,9 +13,3 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('register/', register, name='register'),
 ]
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns

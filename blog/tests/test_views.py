@@ -51,6 +51,11 @@ class TestBlog(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertEquals(failed_response.status_code, 404)
 
+    def test_post_hits(self):
+        self.assertEquals(self.post.views_count, 0)
+        self.client.get('/post/1/')
+        self.assertEquals(self.post.views_count, 1)
+
 
 class TestApplications(TestCase):
 
@@ -68,3 +73,8 @@ class TestApplications(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertEquals(failed_response.status_code, 404)
         self.assertIn('Открыть приложение', response.content.decode())
+
+    def test_app_hits(self):
+        self.assertEquals(self.app.views_count, 0)
+        self.client.get('/app/test-app/')
+        self.assertEquals(self.app.views_count, 1)

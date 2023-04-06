@@ -9,6 +9,8 @@ from .services import get_index_data, base_view, PostsListMixin, AppsListMixin, 
 from django.views.generic import ListView
 import logging
 from hitcount.views import HitCountDetailView
+from django.views.decorators.cache import cache_page
+
 
 logger = logging.getLogger(__name__)
 
