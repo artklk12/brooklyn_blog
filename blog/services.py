@@ -1,6 +1,82 @@
 # import requests
-from .models import App, Post
-from django.shortcuts import get_object_or_404
+from django.db import transaction
+from .models import App
+from django.shortcuts import get_object_or_404, get_list_or_404
+import logging
+import functools
+from .models import Post
+from django.views import generic, View
+from django.http import Http404, HttpResponseServerError
+
+
+logger = logging.getLogger(__name__)
+
+
+class BaseView(View):
+    """ Базовый класс для всех view, добавляет логирование и обработку исключений"""
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            response = super().dispatch(request, *args, **kwargs)
+            return response
+        except Http404 as ex:
+            logger.exception(ex)
+            raise Http404
+        except Exception as ex:
+            logger.exception(ex)
+            return HttpResponseServerError('Internal Server Error')
+
+
+def base_view(func):
+    @functools.wraps(func)
+    def inner(request, *args, **kwargs):
+        try:
+            with transaction.atomic():
+                return func(request, *args, **kwargs)
+        except Exception as ex:
+            return logger.exception(ex)
+
+    return inner
+
+
+class PostsListMixin(generic.base.ContextMixin):
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        self.tag = self.request.GET.get('tag')
+        if self.tag:
+            queryset = get_list_or_404(Post.objects.filter(tags__slug=self.tag).prefetch_related('views', 'tags'))
+        else:
+            queryset = get_list_or_404(Post.objects.prefetch_related('views', 'tags'))
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = self.tag
+        return context
+
+
+class AppsListMixin(generic.base.ContextMixin):
+    context_object_name = 'apps'
+
+    def get_queryset(self):
+        queryset = get_list_or_404(App.objects.prefetch_related('views'))
+        return queryset
+
+
+class AppDetailMixin(generic.base.ContextMixin):
+
+    def get_object(self):
+        obj = get_object_or_404(App.objects.prefetch_related('views'), slug=self.kwargs['slug'])
+        return obj
+
+
+class PostDetailMixin(generic.base.ContextMixin):
+
+    def get_object(self):
+        obj = get_object_or_404(Post.objects.prefetch_related('views', 'tags'), pk=self.kwargs['pk'])
+        return obj
+
 
 # def apps_is_active():
 #     apps = App.objects.all()
@@ -17,23 +93,16 @@ from django.shortcuts import get_object_or_404
 
 
 def get_index_data():
-    apps = App.objects.order_by('-views_count')[0:3]
-    posts = Post.objects.all()[0:2]
+    apps = App.objects.prefetch_related('views')[0:3]
+    posts = Post.objects.prefetch_related('views', 'tags')[0:2]
     return apps, posts
-
-
-def get_all_apps():
-    apps = App.objects.order_by('-views_count')
-    return apps
 
 
 def get_post(pk):
     post = get_object_or_404(Post, pk=pk)
-    post.add_view()
     return post
 
 
 def get_app(slug):
     app = get_object_or_404(App, slug=slug)
-    app.add_view()
     return app

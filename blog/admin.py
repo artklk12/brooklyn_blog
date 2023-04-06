@@ -34,7 +34,7 @@ class PostsAdmin(admin.ModelAdmin):
 
 
 class AppsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'logo_url', 'views_count',)
+    list_display = ('id', 'title', 'logo_url',)
     list_display_links = ('id', 'title',)
     search_fields = ('title',)
     form = AppAdminForm

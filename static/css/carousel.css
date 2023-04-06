@@ -7,9 +7,9 @@
 }
 
 @media (min-width: 768px) {
-  .bd-placeholder-img-lg {
+.bd-placeholder-img-lg {
     font-size: 3.5rem;
-  }
+}
 }
 
 .b-example-divider {
@@ -239,6 +239,7 @@ img {
     font-family: Fira Sans,sans-serif;
     color: #333;
     font-size: 1.24375rem;
+    margin-bottom: 0.3rem;
 }
 
 .short-desc {
@@ -422,13 +423,10 @@ ul.changelog {
     color: #798e98;
 }
 
-.views-count img {
-    margin-right: 0.5rem!important;
-    margin-left: 0!important;
-}
-
-.views-color {
-    color: #bdcdd6;
+.views-count p {
+    margin-bottom: 0!important;
+    margin-left: 0.4rem!important;
+    line-height: 1.3rem!important;
 }
 
 
