@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import socket
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -55,7 +56,7 @@ SECRET_KEY = 'django-insecure-lt-yv0x-*bqsc2=e0g$@09#ce(_a!i!%iw(_10!e7$ctgoay+q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0']
 
 
 # Application definition
@@ -115,10 +116,24 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'blog',
+#         'USER': 'brooklyn',
+#         'PASSWORD': '1234',
+#         'HOST': 'localhost',
+#         'PORT': '54321',
+#     },
+# }
+
+REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1')
+REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379',
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/1',
     }
 }
 
@@ -140,6 +155,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '10.0.2.2']
+
 if DEBUG:
     INSTALLED_APPS += [
         'debug_toolbar',
@@ -160,9 +178,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-# REDIS related settings
-REDIS_HOST = '127.0.0.1'
-REDIS_PORT = '6379'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -182,9 +197,7 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
+# INTERNAL_IPS = ["127.0.0.1", "0.0.0.0"]
 
 # HINTCOUNT APP SETTINGS
 HITCOUNT_KEEP_HIT_ACTIVE = {'minutes': 1}
