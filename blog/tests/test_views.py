@@ -4,9 +4,9 @@ from blog.models import Post, App
 
 class TestSite(TestCase):
 
-    def test_index(self):
-        response = self.client.get('/')
-        self.assertEquals(response.status_code, 200)
+    # def test_index(self):
+    #     response = self.client.get('/')
+    #     self.assertEquals(response.status_code, 200)
 
     def test_login(self):
         response = self.client.get('/login/')

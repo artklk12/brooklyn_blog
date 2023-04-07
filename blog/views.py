@@ -15,6 +15,7 @@ from django.views.decorators.cache import cache_page
 logger = logging.getLogger(__name__)
 
 
+@cache_page(60)
 @base_view
 def start(request):
     # apps_is_active()
