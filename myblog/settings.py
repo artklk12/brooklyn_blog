@@ -51,12 +51,12 @@ LOGGING = {
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-lt-yv0x-*bqsc2=e0g$@09#ce(_a!i!%iw(_10!e7$ctgoay+q'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'brooklyn-blog.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -156,7 +156,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '10.0.2.2']
+# INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '10.0.2.2']
 
 if DEBUG:
     INSTALLED_APPS += [
@@ -197,7 +197,7 @@ CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# INTERNAL_IPS = ["127.0.0.1", "0.0.0.0"]
+INTERNAL_IPS = ['*']
 
 # HINTCOUNT APP SETTINGS
 HITCOUNT_KEEP_HIT_ACTIVE = {'minutes': 1}
