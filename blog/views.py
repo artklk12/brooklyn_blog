@@ -4,18 +4,14 @@ from .models import Post, App
 from django.contrib.auth import login, logout
 # from .services import apps_is_active
 from .services import get_index_data, base_view, PostsListMixin, AppsListMixin, BaseView, PostDetailMixin, AppDetailMixin
-# from django.contrib.auth.decorators import login_required
-# from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 import logging
 from hitcount.views import HitCountDetailView
-from django.views.decorators.cache import cache_page
 
 
 logger = logging.getLogger(__name__)
 
 
-@cache_page(60)
 @base_view
 def start(request):
     # apps_is_active()
@@ -24,7 +20,7 @@ def start(request):
 
 
 class BlogListView(BaseView, PostsListMixin, ListView):
-    paginate_by = 2
+    paginate_by = 10
     model = Post
     template_name = "blog.html"
 
