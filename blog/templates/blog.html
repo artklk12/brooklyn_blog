@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}<title>Блог</title>{% endblock %}
 {% block content %}
   <!-- Marketing messaging and featurettes
   ================================================== -->
@@ -18,18 +19,20 @@
         </div>
         <div class="blog-body-scroll">
         <nav class="blog-navbar-scroll nav nav-tabs">
+          {% with section=view.kwargs.section %}
           <div class="blog-cat-card">
-             <a class="nav-link custom-active" aria-current="page" href="{% url 'blog' %}">Все статьи</a>
+            <a class="blog-navlink-color nav-link {% if section == 'all' or request.resolver_match.url_name == 'blog_tag' %}custom-active{% endif %}" aria-current="page" href="{% url 'default_blog' %}">Все статьи</a>
           </div>
           <div class="blog-cat-card">
-            <a class="nav-link disabled" href="#">Мой блог</a>
+            <a class="blog-navlink-color nav-link {% if section == 'brooklyn-blog' %}custom-active{% endif %}" href="{% url 'blog_section' 'brooklyn-blog' %}">Мой блог</a>
           </div>
           <div class="blog-cat-card">
-            <a class="nav-link disabled">Статьи про Python</a>
+            <a class="blog-navlink-color nav-link {% if section == 'articles' %}custom-active{% endif %}" href="{% url 'blog_section' 'articles' %}">Полезные статьи про Python, Django и прочее</a>
           </div>
           <div class="blog-cat-card">
-            <a class="nav-link disabled">Статьи про Django</a>
+            <a class="blog-navlink-color nav-link {% if section == 'qna' %}custom-active{% endif %}" href="{% url 'blog_section' 'qna' %}">Ошибки и ответы</a>
           </div>
+          {% endwith %}
         </nav>
         </div>
       </div>
@@ -54,11 +57,11 @@
         <p class="post-tags">
           {% for tag in post.tags.all %}
           {% if forloop.last %}
-            <a class="tag-link" href="{% url 'blog' %}?tag={{ tag.slug }}">
+            <a class="tag-link" href="{% url 'blog_tag' tag.slug %}">
             <span>{{ tag.title }}</span>
             </a>
           {% else %}
-            <a class="tag-link" href="{% url 'blog' %}?tag={{ tag.slug }}">
+            <a class="tag-link" href="{% url 'blog_tag' tag.slug %}">
             <span>{{ tag.title }}, </span>
             </a>
           {% endif %}
@@ -91,7 +94,7 @@
             {% if page_obj.has_previous %}
              <li class="page-item">
               <a class="page-link"
-                 href="?page={{ page_obj.previous_page_number }}{% if tag %}&tag={{ tag }}{% endif %}">
+                 href="?page={{ page_obj.previous_page_number }}">
                 Previous</a>
             </li>
             {% else %}
@@ -103,16 +106,16 @@
             {% for page in paginator.page_range %}
               {% if page_obj.number == page %}
               <li class="page-item active" aria-current="page">
-                <a class="page-link" href="?page={{ page }}{% if tag %}&tag={{ tag }}{% endif %}">{{ page }}</a>
+                <a class="page-link" href="?page={{ page }}">{{ page }}</a>
               </li>
               {% else %}
-              <li class="page-item"><a class="page-link" href="?page={{ page }}{% if tag %}&tag={{ tag }}{% endif %}">{{ page }}</a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
               {% endif %}
             {% endfor %}
 
             {% if page_obj.has_next %}
             <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if tag %}&tag={{ tag }}{% endif %}">Next</a>
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
             </li>
             {% else %}
             <li class="page-item disabled">

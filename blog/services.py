@@ -40,21 +40,24 @@ def base_view(func):
     return inner
 
 
-class PostsListMixin(generic.base.ContextMixin):
+class TagListMixin(generic.base.ContextMixin):
     context_object_name = 'posts'
 
     def get_queryset(self):
-        self.tag = self.request.GET.get('tag')
-        if self.tag:
-            queryset = get_list_or_404(Post.objects.filter(tags__slug=self.tag).prefetch_related('views', 'tags'))
-        else:
-            queryset = get_list_or_404(Post.objects.prefetch_related('views', 'tags'))
+        queryset = Post.objects.filter(tags__slug=self.kwargs['tag']).prefetch_related('views', 'tags')
         return queryset
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tag'] = self.tag
-        return context
+
+class SectionListMixin(generic.base.ContextMixin):
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        section = self.kwargs['section']
+        if section == 'all':
+            queryset = Post.objects.prefetch_related('views', 'tags')
+        else:
+            queryset = Post.objects.filter(section__title=section).prefetch_related('views', 'tags')
+        return queryset
 
 
 class AppsListMixin(generic.base.ContextMixin):

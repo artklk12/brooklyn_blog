@@ -63,6 +63,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата публикации")
     tags = models.ManyToManyField('Tag', related_name="posts", blank=True)
     views = GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
+    section = models.ForeignKey('Section', on_delete=models.CASCADE, default=1)
 
     # def get_absolute_url(self):
     #     return reverse_lazy('view_tasks', kwargs={"category_id": self.category.id, "pk": self.pk})
@@ -86,3 +87,10 @@ class Comment(models.Model):
     author = models.CharField(max_length=100)
     text = models.TextField(default=None)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата публикации")
+
+
+class Section(models.Model):
+    title = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.title

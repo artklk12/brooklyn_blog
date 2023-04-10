@@ -195,6 +195,7 @@ img {
 
 .custom-active{
     border-bottom: 2px solid !important;
+    color: #0d6efd!important;
 }
 
 
@@ -202,9 +203,17 @@ img {
   letter-spacing: -.05rem;
 }
 
+.blog-navlink-color{
+    color: inherit;
+}
+
 .blog-cat-card {
     width: max-content;
     height: 43px;
+}
+
+.blog-navlink-color:link {
+    border: 0;
 }
 
 .blog-head-scroll {

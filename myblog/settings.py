@@ -73,7 +73,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'ckeditor',
     'ckeditor_uploader',
-    'django_celery_beat'
+    'django_celery_beat',
 ]
 
 

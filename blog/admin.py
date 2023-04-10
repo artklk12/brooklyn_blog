@@ -1,7 +1,7 @@
 from django.contrib import admin
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
-from .models import Post, App, Comment, Tag
+from .models import Post, App, Comment, Tag, Section
 # Register your models here.
 
 
@@ -51,7 +51,13 @@ class TagsAdmin(admin.ModelAdmin):
     list_display_links = ('id',)
 
 
+class SectionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title',)
+    list_display_links = ('id',)
+
+
 admin.site.register(Post, PostsAdmin)
 admin.site.register(App, AppsAdmin)
 admin.site.register(Comment, CommentsAdmin)
 admin.site.register(Tag, TagsAdmin)
+admin.site.register(Section, SectionAdmin)
