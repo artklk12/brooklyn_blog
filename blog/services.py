@@ -1,4 +1,3 @@
-# import requests
 from django.db import transaction
 from .models import App, Post
 from django.shortcuts import get_object_or_404, get_list_or_404
@@ -9,20 +8,6 @@ import functools
 
 
 logger = logging.getLogger(__name__)
-
-
-# def apps_is_active():
-#     apps = App.objects.all()
-#     for app in apps:
-#         r = requests.get(url=app.check_status_url)
-#         if r.ok:
-#             app.is_active = True
-#             app.save()
-#         else:
-#             app.is_active = False
-#             app.save()
-#     return
-#
 
 
 class BaseView(View):

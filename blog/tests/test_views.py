@@ -25,6 +25,8 @@ class TestBlog(TestCase):
 
     def setUp(self):
         post = Post.objects.create(title='TestPost', author='TestAuthor', short_desc='TestShortDesc', text='TestText')
+        for i in range(10):
+            Post.objects.create(title=f'TestPost{i}', author='TestAuthor', short_desc='TestShortDesc', text='TestText')
         Post.objects.create(title='TestPost2', author='TestAuthor', short_desc='TestShortDesc', text='TestText')
         Post.objects.create(title='TestPost3', author='TestAuthor', short_desc='TestShortDesc', text='TestText')
         post.tags.create(title='Machine Learning', slug='ml')

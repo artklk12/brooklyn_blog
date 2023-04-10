@@ -51,13 +51,14 @@ LOGGING = {
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'django-insecure-lt-yv0x-*bqsc2=e0g$@09#ce(_a!i!%iw(_10!e7$ctgoay+q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['brooklyn-blog.onrender.com']
-CSRF_TRUSTED_ORIGINS = ['https://brooklyn-blog.onrender.com']
+# ALLOWED_HOSTS = ['brooklyn-blog.onrender.com']
+ALLOWED_HOSTS = ['*']
+# CSRF_TRUSTED_ORIGINS = ['https://brooklyn-blog.onrender.com']
 
 # Application definition
 
@@ -72,6 +73,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'ckeditor',
     'ckeditor_uploader',
+    'django_celery_beat'
 ]
 
 
@@ -201,3 +203,12 @@ INTERNAL_IPS = ['*']
 
 # HINTCOUNT APP SETTINGS
 HITCOUNT_KEEP_HIT_ACTIVE = {'minutes': 1}
+
+
+# CELERY SETTINGS
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+CELERY_ACCEPTED_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
