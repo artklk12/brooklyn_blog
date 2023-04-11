@@ -51,14 +51,14 @@ LOGGING = {
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-lt-yv0x-*bqsc2=e0g$@09#ce(_a!i!%iw(_10!e7$ctgoay+q'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['brooklyn-blog.onrender.com']
-ALLOWED_HOSTS = ['*']
-# CSRF_TRUSTED_ORIGINS = ['https://brooklyn-blog.onrender.com']
+ALLOWED_HOSTS = ['brooklyn-blog.onrender.com']
+# ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://brooklyn-blog.onrender.com']
 
 # Application definition
 
