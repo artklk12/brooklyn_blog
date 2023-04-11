@@ -195,6 +195,7 @@ img {
 
 .custom-active{
     border-bottom: 2px solid !important;
+    color: #0d6efd!important;
 }
 
 
@@ -202,9 +203,18 @@ img {
   letter-spacing: -.05rem;
 }
 
+.blog-navlink-color{
+    color: inherit;
+}
+
+
 .blog-cat-card {
     width: max-content;
     height: 43px;
+}
+
+.blog-navlink-color:link {
+    border: 0;
 }
 
 .blog-head-scroll {
@@ -233,6 +243,11 @@ img {
     margin-right: auto!important;
     margin-left: auto!important;
     display: block;
+}
+
+a.post-title {
+    color: #333;
+    text-decoration: none;
 }
 
 .post-head {
@@ -311,6 +326,22 @@ a.tag-link:link, a.tag-link:hover, a.tag-link:visited, a.tag-link:focus, a.tag-l
 
 /* RESPONSIVE CSS
 -------------------------------------------------- */
+@media (min-width: 1000px) {
+img.carousel-main {
+    max-width: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+}
+
+@media (max-width: 1000px) {
+img.carousel-main {
+    height: 100%!important;
+    width: auto;
+    object-fit: cover;
+}
+}
+
 
 @media (min-width: 40em) {
   /* Bump up size of carousel content */

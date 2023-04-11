@@ -15,3 +15,20 @@ services:
 
   redis:
     image: redis:latest
+
+  celery:
+    build:
+      context: .
+    command: celery -A myblog worker -l info
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - web
+      - redis
+
+  celery-beat:
+    build:
+      context: .
+    command: celery -A myblog beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/usr/src/app

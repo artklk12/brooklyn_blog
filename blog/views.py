@@ -2,8 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import UserLoginForm, UserRegisterForm
 from .models import Post, App
 from django.contrib.auth import login, logout
-# from .services import apps_is_active
-from .services import get_index_data, base_view, PostsListMixin, AppsListMixin, BaseView, PostDetailMixin, AppDetailMixin
+from .services import get_index_data, base_view, SectionListMixin, AppsListMixin, BaseView, PostDetailMixin, AppDetailMixin, TagListMixin
 from django.views.generic import ListView
 import logging
 from hitcount.views import HitCountDetailView
@@ -14,32 +13,47 @@ logger = logging.getLogger(__name__)
 
 @base_view
 def start(request):
-    # apps_is_active()
     apps, posts = get_index_data()
     return render(request, 'index.html', {'posts': posts, 'apps': apps})
 
 
-class BlogListView(BaseView, PostsListMixin, ListView):
+@base_view
+def blog(request):
+    return redirect('blog_section', section='all')
+
+
+class BlogListView(BaseView, SectionListMixin, ListView):
     paginate_by = 10
     model = Post
     template_name = "blog.html"
+    allow_empty = False
 
 
 class ApplicationsListView(BaseView, AppsListMixin, ListView):
     model = App
     template_name = "applications.html"
+    allow_empty = False
+
+
+class TagListView(BaseView, TagListMixin, ListView):
+    paginate_by = 10
+    model = Post
+    template_name = "blog.html"
+    allow_empty = False
 
 
 class PostDetailView(BaseView, PostDetailMixin, HitCountDetailView):
     model = Post
     template_name = "post.html"
     count_hit = True
+    allow_empty = False
 
 
 class AppDetailView(BaseView, AppDetailMixin, HitCountDetailView):
     model = App
     template_name = "app.html"
     count_hit = True
+    allow_empty = False
 
 
 @base_view

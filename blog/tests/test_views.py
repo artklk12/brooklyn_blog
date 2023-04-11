@@ -1,5 +1,5 @@
 from django.test import TestCase
-from blog.models import Post, App
+from blog.models import Post, App, Section
 
 
 class TestSite(TestCase):
@@ -24,23 +24,25 @@ class TestSite(TestCase):
 class TestBlog(TestCase):
 
     def setUp(self):
+        Section.objects.create(title='all')
         post = Post.objects.create(title='TestPost', author='TestAuthor', short_desc='TestShortDesc', text='TestText')
-        Post.objects.create(title='TestPost2', author='TestAuthor', short_desc='TestShortDesc', text='TestText')
-        Post.objects.create(title='TestPost3', author='TestAuthor', short_desc='TestShortDesc', text='TestText')
+        for i in range(10):
+            Post.objects.create(title=f'TestPost{i}', author='TestAuthor', short_desc='TestShortDesc', text='TestText')
         post.tags.create(title='Machine Learning', slug='ml')
         self.post = post
 
+
     def test_blog_pagination(self):
-        response = self.client.get('/blog/')
-        next_page_response = self.client.get('/blog/?page=2')
+        response = self.client.get('/blog/all/')
+        next_page_response = self.client.get('/blog/all/?page=2')
         self.assertEquals(response.status_code, 200)
         self.assertEquals(next_page_response.status_code, 200)
         self.assertIn('Читать далее', response.content.decode())
         self.assertIn('Читать далее', next_page_response.content.decode())
 
     def test_blog_tags(self):
-        response = self.client.get('/blog/?tag=ml')
-        failed_response = self.client.get('/blog/?tag=mlmlml')
+        response = self.client.get('/blog/tag/ml/')
+        failed_response = self.client.get('/blog/tag/mlmlml/')
         self.assertEquals(response.status_code, 200)
         self.assertEquals(failed_response.status_code, 404)
         self.assertIn('Читать далее', response.content.decode())
