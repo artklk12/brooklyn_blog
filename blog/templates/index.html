@@ -11,8 +11,7 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <svg class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true"
-             preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+        <img class="carousel-main" src="{% static 'css/fon1.png' %}">
         <div class="container">
           <div class="carousel-caption text-start">
             <h1>Встречайте, новый сайт!</h1>
@@ -22,7 +21,7 @@
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+        <img class="carousel-main" src="{% static 'css/fon2.png' %}">
         <div class="container">
           <div class="carousel-caption text-start">
             <h1>Кто я такой?</h1>
@@ -32,12 +31,12 @@
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+        <img class="carousel-main" src="{% static 'css/fon3.png' %}">
         <div class="container">
           <div class="carousel-caption text-start">
             <h1>Следите за новостями</h1>
             <p>Подписывайтесь в телегу, инсту и тд.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+            <p><a class="btn btn-lg btn-primary" href="#">Подписаться</a></p>
           </div>
         </div>
       </div>
@@ -133,7 +132,8 @@
           <div class="comment-username">{{ post.author }}</div>
           <div class="comment-datetime">{{ post.created_at }}</div>
         </div>
-      <h2 class="post-head">{{ post.title }}</h2>
+
+      <h2 class="post-head"><a class="post-title" href="{% url 'post' post.pk %}">{{ post.title }}</a></h2>
         <div class="views-count">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye"
                viewBox="0 0 16 16">

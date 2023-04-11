@@ -45,7 +45,7 @@
           <div class="comment-username">{{ post.author }}</div>
           <div class="comment-datetime">{{ post.created_at }}</div>
         </div>
-        <h2 class="post-head">{{ post.title }}</h2>
+      <h2 class="post-head"><a class="post-title" href="{% url 'post' post.pk %}">{{ post.title }}</a></h2>
         <div class="views-count">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye"
                viewBox="0 0 16 16">
