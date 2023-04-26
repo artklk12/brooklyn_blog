@@ -30,7 +30,8 @@
             <a class="blog-navlink-color nav-link {% if section == 'articles' %}custom-active{% endif %}" href="{% url 'blog_section' 'articles' %}">Полезные статьи про Python, Django и прочее</a>
           </div>
           <div class="blog-cat-card">
-            <a class="blog-navlink-color nav-link {% if section == 'qna' %}custom-active{% endif %}" href="{% url 'blog_section' 'qna' %}">Ошибки и ответы</a>
+            <a class="blog-navlink-color nav-link {% if section == 'qna' %}custom-active{% endif %}"
+               href="{% url 'blog_section' 'qna' %}">Ошибки и решения</a>
           </div>
           {% endwith %}
         </nav>

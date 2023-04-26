@@ -4,9 +4,9 @@ from blog.models import Post, App, Section
 
 class TestSite(TestCase):
 
-    # def test_index(self):
-    #     response = self.client.get('/')
-    #     self.assertEquals(response.status_code, 200)
+    def test_index(self):
+        response = self.client.get('/')
+        self.assertEquals(response.status_code, 200)
 
     def test_login(self):
         response = self.client.get('/login/')
@@ -24,13 +24,12 @@ class TestSite(TestCase):
 class TestBlog(TestCase):
 
     def setUp(self):
-        Section.objects.create(title='all')
-        post = Post.objects.create(title='TestPost', author='TestAuthor', short_desc='TestShortDesc', text='TestText')
+        section = Section.objects.create(title='articles')
+        post = Post.objects.create(title='TestPost', author='TestAuthor', short_desc='TestShortDesc', section=section, text='TestText')
         for i in range(10):
-            Post.objects.create(title=f'TestPost{i}', author='TestAuthor', short_desc='TestShortDesc', text='TestText')
+            Post.objects.create(title=f'TestPost{i}', author=f'TestAuthor{i}', short_desc=f'TestShortDesc{i}', section=section, text='TestText')
         post.tags.create(title='Machine Learning', slug='ml')
         self.post = post
-
 
     def test_blog_pagination(self):
         response = self.client.get('/blog/all/')
@@ -48,14 +47,14 @@ class TestBlog(TestCase):
         self.assertIn('Читать далее', response.content.decode())
 
     def test_post(self):
-        response = self.client.get('/post/1/')
+        response = self.client.get(f'/post/{self.post.pk}/')
         failed_response = self.client.get('/post/1213/')
         self.assertEquals(response.status_code, 200)
         self.assertEquals(failed_response.status_code, 404)
 
     def test_post_hits(self):
         self.assertEquals(self.post.views_count, 0)
-        self.client.get('/post/1/')
+        self.client.get(f'/post/{self.post.pk}/')
         self.assertEquals(self.post.views_count, 1)
 
 

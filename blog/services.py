@@ -1,6 +1,6 @@
 from django.db import transaction
 from .models import App, Post
-from django.shortcuts import get_object_or_404, get_list_or_404
+from django.shortcuts import get_object_or_404
 from django.http import Http404, HttpResponseServerError
 from django.views import generic, View
 import logging
@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseView(View):
-    """ Базовый класс для всех view, добавляет логирование и обработку исключений"""
+    """Базовый класс для всех view, добавляет логирование и обработку исключений"""
 
     def dispatch(self, request, *args, **kwargs):
         try:
@@ -26,6 +26,8 @@ class BaseView(View):
 
 
 def base_view(func):
+    """Базовый декоратор для всех view, добавляет логирование и обработку исключений"""
+
     @functools.wraps(func)
     def inner(request, *args, **kwargs):
         try:
@@ -41,6 +43,8 @@ def base_view(func):
 
 
 class TagListMixin(generic.base.ContextMixin):
+    """Миксин для возвращения queryset, с Постами, у которых есть определенный Тэг"""
+
     context_object_name = 'posts'
 
     def get_queryset(self):
@@ -49,6 +53,8 @@ class TagListMixin(generic.base.ContextMixin):
 
 
 class SectionListMixin(generic.base.ContextMixin):
+    """Миксин для возвращения queryset, с Постами, которые принадлежат к определенной категории"""
+
     context_object_name = 'posts'
 
     def get_queryset(self):
@@ -60,15 +66,8 @@ class SectionListMixin(generic.base.ContextMixin):
         return queryset
 
 
-class AppsListMixin(generic.base.ContextMixin):
-    context_object_name = 'apps'
-
-    def get_queryset(self):
-        queryset = get_list_or_404(App.objects.prefetch_related('views'))
-        return queryset
-
-
 class AppDetailMixin(generic.base.ContextMixin):
+    """Миксин для возвращения Приложения или Http404"""
 
     def get_object(self):
         obj = get_object_or_404(App.objects.prefetch_related('views'), slug=self.kwargs['slug'])
@@ -76,6 +75,7 @@ class AppDetailMixin(generic.base.ContextMixin):
 
 
 class PostDetailMixin(generic.base.ContextMixin):
+    """Миксин для возвращения Поста или Http404"""
 
     def get_object(self):
         obj = get_object_or_404(Post.objects.prefetch_related('views', 'tags'), pk=self.kwargs['pk'])
@@ -83,6 +83,8 @@ class PostDetailMixin(generic.base.ContextMixin):
 
 
 def get_index_data():
+    """Функция для получения Постов и Приложений для главной страницы"""
+
     apps = App.objects.prefetch_related('views')[0:3]
     posts = Post.objects.prefetch_related('views', 'tags')[0:2]
     return apps, posts

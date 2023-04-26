@@ -1,3 +1,4 @@
 __pycache__/
 .coverage
 information.log
+db.sqlite3

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import UserLoginForm, UserRegisterForm
 from .models import Post, App
 from django.contrib.auth import login, logout
-from .services import get_index_data, base_view, SectionListMixin, AppsListMixin, BaseView, PostDetailMixin, AppDetailMixin, TagListMixin
+from .services import get_index_data, base_view, SectionListMixin, BaseView, PostDetailMixin, AppDetailMixin, TagListMixin
 from django.views.generic import ListView
 import logging
 from hitcount.views import HitCountDetailView
@@ -26,13 +26,12 @@ class BlogListView(BaseView, SectionListMixin, ListView):
     paginate_by = 10
     model = Post
     template_name = "blog.html"
-    allow_empty = False
 
 
-class ApplicationsListView(BaseView, AppsListMixin, ListView):
+class ApplicationsListView(BaseView, ListView):
     model = App
     template_name = "applications.html"
-    allow_empty = False
+    context_object_name = 'apps'
 
 
 class TagListView(BaseView, TagListMixin, ListView):
