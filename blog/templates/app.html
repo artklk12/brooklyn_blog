@@ -53,9 +53,11 @@
       <div>{{ app.text|safe }}</div>
 
       <h3><u>Полезные ссылки</u></h3>
-      <p>{{ app.link1 }}</p>
-      <p>{{ app.link2 }}</p>
-      <p>{{ app.link3 }}</p>
+      <div class="app-links">
+          <p><a href="{{ app.link1 }}">{{ app.link1 }}</a></p>
+          <p><a href="{{ app.link2 }}">{{ app.link2 }}</a></p>
+          <p><a href="{{ app.link3 }}">{{ app.link3 }}</a></p>
+      </div>
 
       <h3><u>Обновления и изменения</u></h3>
       <p>Здесь будет находиться</p>

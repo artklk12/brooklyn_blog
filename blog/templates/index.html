@@ -16,7 +16,7 @@
           <div class="carousel-caption text-start">
             <h1>Встречайте, новый сайт!</h1>
             <p>Здесь я буду выкладывать все, что связано с разработкой</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Подробнее</a></p>
+            <p><a class="btn btn-lg btn-warning" href="#">Подробнее</a></p>
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@
           <div class="carousel-caption text-start">
             <h1>Кто я такой?</h1>
             <p>Подробнее про меня можно почитать тут</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+            <p><a class="btn btn-lg btn-warning" href="#">Learn more</a></p>
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@
           <div class="carousel-caption text-start">
             <h1>Следите за новостями</h1>
             <p>Подписывайтесь в телегу, инсту и тд.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Подписаться</a></p>
+            <p><a class="btn btn-lg btn-warning" href="#">Подписаться</a></p>
           </div>
         </div>
       </div>
@@ -72,12 +72,13 @@
       <div class="app-divider"></div>
       {% for app in apps %}
       <div class="col-lg-4 app-top">
+        <a class="app-title" href="{% url 'app' app.slug %}">
         <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="{{ app.logo_url }}"
            role="img" aria-label="Placeholder: 140x140">
         <h2 class="fw-normal">{{ app.title }}</h2>
+        </a>
 
         <p> {{ app.short_desc }} </p>
-        <p><a class="btn btn-secondary" href="{% url 'app' app.slug %}">Смотреть &raquo;</a></p>
 
           <div class="app-status">
             {% if app.is_active %}
@@ -105,7 +106,7 @@
     {% endfor %}
 
       <div class="more-apps-block gap-2 col-2 mx-auto">
-        <a href="{% url 'apps' %}" class="btn btn-primary">Все приложения</a>
+        <a href="{% url 'apps' %}" class="btn btn-secondary">Все приложения</a>
       </div>
 
     </div><!-- /.row -->
@@ -178,7 +179,7 @@
 
     <!-- /END THE FEATURETTES -->
         <div class="d-grid gap-2 col-2 read-more-block mx-auto">
-        <a href="{% url 'default_blog' %}" class="btn btn-primary">Читать еще</a>
+        <a href="{% url 'default_blog' %}" class="btn btn-secondary">Читать еще</a>
       </div>
   </div><!-- /.container -->
 </div>
