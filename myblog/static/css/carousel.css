@@ -120,7 +120,6 @@ body {
 }
 
 .app-top {
-    height: max-content;
     background: white;
     padding-top: 1.5rem;
     padding-bottom: 0.5rem;
@@ -452,6 +451,12 @@ ul.changelog {
     padding-top: 0;
 }
 
+.app-index-card-footer {
+    background-color: white;
+    border-top: none;
+    padding: 0;
+}
+
 .app-card-bg {
     max-width: 100%;
 }
@@ -495,6 +500,9 @@ ul.changelog {
 
 /* Comments
 ------------------------- */
+.comment-add-btn {
+    margin-bottom: 1rem;
+}
 
 .comments-count {
     padding-left: 1rem;
@@ -558,7 +566,7 @@ ul.changelog {
 .comment-input {
     height: 100px;
     resize: none;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .comment-input-block {

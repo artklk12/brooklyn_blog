@@ -1,8 +1,10 @@
 from django.db import transaction
+from django.urls import reverse
 from .models import App, Post
 from django.shortcuts import get_object_or_404
 from django.http import Http404, HttpResponseServerError
 from django.views import generic, View
+from .forms import CommentForm
 import logging
 import functools
 
@@ -78,8 +80,24 @@ class PostDetailMixin(generic.base.ContextMixin):
     """Миксин для возвращения Поста или Http404"""
 
     def get_object(self):
-        obj = get_object_or_404(Post.objects.prefetch_related('views', 'tags'), pk=self.kwargs['pk'])
+        obj = get_object_or_404(Post.objects.prefetch_related('views', 'tags', 'comments__author'), pk=self.kwargs['pk'])
         return obj
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()
+        return context
+
+
+class CommentMixin(generic.edit.FormMixin):
+
+    def get_success_url(self):
+        return reverse('post', kwargs={'pk': self.kwargs['pk']})
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post = Post.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
 
 
 def get_index_data():

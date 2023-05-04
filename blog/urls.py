@@ -1,6 +1,7 @@
-from django.urls import path
+from django.conf import settings
+from django.urls import path, include
 from .views import start, user_login, user_logout, register, BlogListView, ApplicationsListView, PostDetailView, \
-    AppDetailView, TagListView, blog
+    AppDetailView, TagListView, blog, CommentCreateView
 
 
 urlpatterns = [
@@ -14,4 +15,12 @@ urlpatterns = [
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
     path('register/', register, name='register'),
+    path('post/<int:pk>/create-comment/', CommentCreateView.as_view(), name='create_comment'),
 ]
+
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+       path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

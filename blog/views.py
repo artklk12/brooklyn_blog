@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from .forms import UserLoginForm, UserRegisterForm
-from .models import Post, App
+from .models import Post, App, Comment
 from django.contrib.auth import login, logout
-from .services import get_index_data, base_view, SectionListMixin, BaseView, PostDetailMixin, AppDetailMixin, TagListMixin
-from django.views.generic import ListView
+from .services import get_index_data, base_view, SectionListMixin, BaseView, PostDetailMixin, AppDetailMixin, TagListMixin, CommentMixin
+from django.views.generic import ListView, CreateView
 import logging
 from hitcount.views import HitCountDetailView
 
@@ -46,6 +46,11 @@ class PostDetailView(BaseView, PostDetailMixin, HitCountDetailView):
     template_name = "post.html"
     count_hit = True
     allow_empty = False
+
+
+class CommentCreateView(BaseView, CommentMixin, CreateView):
+    model = Comment
+    fields = ['text']
 
 
 class AppDetailView(BaseView, AppDetailMixin, HitCountDetailView):

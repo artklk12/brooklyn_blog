@@ -52,96 +52,41 @@
     <!-- Комментарии -->
     <div class="comment-block row featurette">
       <div class="blog-post">
-        <h2 class="post-head comment-block-head">Комментарии<span class="comments-count">5<span
-                class="position-absolute  badge rounded-pill bg-danger">in
-              dev</span></span></h2>
+        <h2 class="post-head comment-block-head">Комментарии<span class="comments-count">{{ post.comments_count }}</span></h2>
         <div class="col-md-5 order-md-1 mx-auto">
       </div>
       <div class="comments">
+      {% for comment in post.comments.all %}
         <div class="comment">
               <div class="comment-dot"><button type="button" class="comment-btn btn btn-outline-secondary"></button></div>
               <div class="comment-content">
                 <div class="comment-header">
-                  <div class="comment-username">Гость</div>
-                  <div class="comment-datetime">вчера в 20:17</div>
+                  <div class="comment-username">{{ comment.author }}</div>
+                  <div class="comment-datetime">{{ comment.created_at }}</div>
                 </div>
-              <p class="comment-text">Есть забавное предположение, что автора могли заставить написать книгу, он не
-                хотел это делать, но не мог отказаться (потеряет работу, гранты, какие-то перспективы). А так написал
-                книгу, она умеренно плохая, за это уже не карают, но заставлять ещё раз не будут. В некоторых наших универах и компаниях такое встречается, сделать плохо гораздо лучше для отношения с окружающими, чем не сделать вовсе.
-<p class="comment-text">
-А так книга - шедевр, спасибо за разбор, было интересно почитать. Я бы предложил сформулировать основные тезисы с самыми любыми косяками и отправить письма в универ, на работу автору книги, если не ответят - тегнуть в социальных сетях его коллег/представителей клмпвнии. Интересно, что они скажут.</p>
-
-                </div>
-            </div>
-        <div class="comment comment-author">
-              <div class="comment-dot"><button type="button" class="comment-btn btn btn-outline-secondary"></button></div>
-              <div class="comment-content">
-                <div class="comment-header">
-                  <div class="comment-username comment-author-text">Brooklyn</div>
-                  <div class="comment-datetime">вчера в 21:18</div>
-
-                </div>
-              <p class="comment-text">
-                  Есть вариант, что книгу вообще никто не писал. https://habr.com/ru/post/698852/
-              </p>
-
-                </div>
-            </div>
-        <div class="comment">
-              <div class="comment-dot"><button type="button" class="comment-btn btn btn-outline-secondary"></button></div>
-              <div class="comment-content">
-                <div class="comment-header">
-                  <div class="comment-username">Гость</div>
-                  <div class="comment-datetime">Сегодня в 12:03</div>
-                </div>
-              <p class="comment-text">Вы не правы, когда противопоставляете криптографию и стенографию.
-
-Криптография, как наука, включает в себя стенографию, как метод. Любая наука на практике реализуется через методы, которые эта наука анализирует и определяет.
-
-Так, что стенография, это часть криптографии.</p>
-
-                </div>
-            </div>
-        <div class="comment comment-author">
-              <div class="comment-dot"><button type="button" class="comment-btn btn btn-outline-secondary"></button></div>
-              <div class="comment-content">
-                <div class="comment-header">
-                  <div class="comment-username">Гость</div>
-                  <div class="comment-datetime">Сегодня в 20:19</div>
-                </div>
-              <p class="comment-text">*Стеганографию
-
-Криптография и стеганография - это разные науки, хоть и обе защищают информацию. Одна (криптография) защищает информацию посредством шифрования, когда существует факт сообщения, но смысл неясен. Другая (стеганография) защищает информацию посредством самого факта её сокрытия. Обе науки развивались иногда параллельно, иногда в синтезе. Но их даже теоретически нельзя связать, кроме того, что они защищают информацию. Плюс к этому криптография, вырадившись из своей классической оболочки, стала также способной не только предоставлять конфиденциальность информации, но также её целостность и аутентификацию. Стеганография в этом плане отстаёт, как в способах применения, так и на практике.</p>
-
-                </div>
-            </div>
-        <div class="comment">
-              <div class="comment-dot"><button type="button" class="comment-btn btn btn-outline-secondary"></button></div>
-              <div class="comment-content">
-                <div class="comment-header">
-                  <div class="comment-username">Гость</div>
-                  <div class="comment-datetime">вчера в 20:13</div>
-                </div>
-              <p class="comment-text">Я ни разу не специалист по криптографии и купил эту книгу как раз для того, чтобы попробовать немного разобраться. Однако, даже мой совсем уж никакой уровень знаний в этой области оказался достаточным для того, чтобы закралось подозрение, что я читаю какую-то лажу.
-Вижу, что так и есть. Не денег жалко. Жалко, что обманулся. Обычно "ДМК" выпускает книги весьма качественные и ответственно выбранные для перевода.
-
-P.S. Выпущенная этим же издательством манга по криптографии, не смотря на ее легкий жанр с картинками, и та, кажется, куда лучше</p>
-
+              <p class="comment-text">{{ comment.text|safe }}</p>
+              </div>
         </div>
-        </div>
+      {% endfor %}
 
       </div>
 
       </div>
       </div>
           <!-- Ввод комментария -->
-<!--    <div class="comment-input-block">Ваш комментарий-->
-<!--      <textarea class="comment-input form-control form-control-lg" placeholder="Введите комментарий"></textarea>-->
-<!--    </div>-->
-      </div>
-
-     <!-- /END Комментарии -->
+    <form action="{% url 'create_comment' post.pk %}" method="post">
+    {% csrf_token %}
+        <div class="comment-input-block">Ваш комментарий
+<!--          <textarea class="comment-input form-control form-control-lg" placeholder="Введите комментарий"></textarea>-->
+            {{ comment_form.text }}
+            {{ comment_form.media }}
+        </div>
+        <button class="comment-add-btn btn btn-secondary" type="submit">Отправить</button>
+    </form>
+    <!-- /END Комментарии -->
     <!-- /END THE FEATURETTES -->
+    </div>
+
 
 
   </div><!-- /.container -->

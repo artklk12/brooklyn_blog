@@ -71,7 +71,8 @@
     <div class="row app-row">
       <div class="app-divider"></div>
       {% for app in apps %}
-      <div class="col-lg-4 app-top">
+      <div class="col-lg-4 card shadow-sm app-top">
+        <div class="card-body h-100">
         <a class="app-title" href="{% url 'app' app.slug %}">
         <img class="bd-placeholder-img rounded-circle" width="140" height="140" src="{{ app.logo_url }}"
            role="img" aria-label="Placeholder: 140x140">
@@ -79,8 +80,8 @@
         </a>
 
         <p> {{ app.short_desc }} </p>
-
-          <div class="app-status">
+        </div>
+          <div class="app-status app-index-card-footer card-footer">
             {% if app.is_active %}
               <p class="app-status-desc">Работает</p>
               <div class="me-auto spinner-border text-success" role="status">

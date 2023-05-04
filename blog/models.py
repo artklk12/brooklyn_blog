@@ -1,6 +1,8 @@
 from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from hitcount.models import HitCount
+from django.contrib.auth.models import User
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class App(models.Model):
@@ -78,6 +80,12 @@ class Post(models.Model):
 
         return sum([views.hits for views in self.views.all()])
 
+    @property
+    def comments_count(self):
+        """Свойство для вывода количества комментариев на странице"""
+
+        return len(self.comments.all())
+
     class Meta:
         verbose_name = 'Post'
         verbose_name_plural = 'Posts'
@@ -87,9 +95,9 @@ class Post(models.Model):
 class Comment(models.Model):
     """Комментарий, будут оставлять пользователи под Постами, еще не реализованная модель в приложении"""
 
-    post = models.ForeignKey('Post', on_delete=models.CASCADE, default=None, verbose_name='related post')
-    author = models.CharField(max_length=100, verbose_name='comment author')
-    text = models.TextField(default=None, verbose_name='comment text')
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='comments', default=None, verbose_name='related post')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = RichTextUploadingField()
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="create date")
 
 
